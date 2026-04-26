@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from datetime import datetime
+from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
@@ -21,12 +24,12 @@ class ColumnStatOut(BaseModel):
     count: int
     missing: int
     unique: int
-    mean: float | None = None
-    std: float | None = None
-    min: float | None = None
-    max: float | None = None
-    top: str | None = None
-    freq: int | None = None
+    mean: Optional[float] = None
+    std: Optional[float] = None
+    min: Optional[float] = None
+    max: Optional[float] = None
+    top: Optional[str] = None
+    freq: Optional[int] = None
 
 
 class AnalysisRunOut(BaseModel):
@@ -36,13 +39,13 @@ class AnalysisRunOut(BaseModel):
     upload_id: int
     status: str
     created_at: datetime
-    finished_at: datetime | None = None
-    error: str | None = None
+    finished_at: Optional[datetime] = None
+    error: Optional[str] = None
 
 
 class StatsOut(BaseModel):
     run: AnalysisRunOut
-    stats: list[ColumnStatOut]
+    stats: List[ColumnStatOut]
 
 
 class SampleOut(BaseModel):

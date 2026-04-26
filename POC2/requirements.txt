@@ -6,3 +6,5 @@ python-multipart>=0.0.9
 pandas>=2.2
 numpy>=1.26
 matplotlib>=3.8
+streamlit>=1.32
+requests>=2.31

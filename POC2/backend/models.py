@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from datetime import datetime
+from typing import List, Optional
 
 from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -16,7 +19,7 @@ class Upload(Base):
     columns: Mapped[int] = mapped_column(Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
-    runs: Mapped[list["AnalysisRun"]] = relationship(
+    runs: Mapped[List["AnalysisRun"]] = relationship(
         back_populates="upload", cascade="all, delete-orphan"
     )
 
@@ -29,13 +32,13 @@ class AnalysisRun(Base):
         ForeignKey("uploads.id", ondelete="CASCADE"), nullable=False
     )
     status: Mapped[str] = mapped_column(String(32), default="pending")
-    plot_path: Mapped[str | None] = mapped_column(String(500), nullable=True)
-    error: Mapped[str | None] = mapped_column(Text, nullable=True)
+    plot_path: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
+    error: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    finished_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    finished_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
 
     upload: Mapped[Upload] = relationship(back_populates="runs")
-    column_stats: Mapped[list["ColumnStat"]] = relationship(
+    column_stats: Mapped[List["ColumnStat"]] = relationship(
         back_populates="run", cascade="all, delete-orphan"
     )
 
@@ -52,11 +55,11 @@ class ColumnStat(Base):
     count: Mapped[int] = mapped_column(Integer, default=0)
     missing: Mapped[int] = mapped_column(Integer, default=0)
     unique: Mapped[int] = mapped_column(Integer, default=0)
-    mean: Mapped[float | None] = mapped_column(Float, nullable=True)
-    std: Mapped[float | None] = mapped_column(Float, nullable=True)
-    min: Mapped[float | None] = mapped_column(Float, nullable=True)
-    max: Mapped[float | None] = mapped_column(Float, nullable=True)
-    top: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    freq: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    mean: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    std: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    min: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    max: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    top: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    freq: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
     run: Mapped[AnalysisRun] = relationship(back_populates="column_stats")

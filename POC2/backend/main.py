@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, List
 
 import pandas as pd
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
@@ -90,7 +91,7 @@ def upload_file(file: UploadFile = File(...), db: Session = Depends(get_db)):
     return upload
 
 
-@app.get("/api/uploads", response_model=list[schemas.UploadOut])
+@app.get("/api/uploads", response_model=List[schemas.UploadOut])
 def list_uploads(db: Session = Depends(get_db)):
     return db.query(Upload).order_by(Upload.created_at.desc()).all()
 
@@ -186,5 +187,5 @@ def get_plot(upload_id: int, db: Session = Depends(get_db)):
 
 
 @app.get("/api/health")
-def health() -> dict[str, str]:
+def health() -> Dict[str, str]:
     return {"status": "ok"}
