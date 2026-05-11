@@ -1,101 +1,163 @@
-# POCs
+# POCs mit VS Code & GitHub Copilot Agent Mode
 
-This repository contains three small proof-of-concept projects that build on
-each other in complexity — from a single-file Streamlit app to a full
-backend + frontend + ML stack.
+Drei kleine, in sich geschlossene Prototypen, die euch durch **drei Komplexitätsstufen
+moderner Daten-Apps** führen — von der Single-File-Streamlit-App über eine
+saubere Drei-Schichten-Architektur bis hin zu einer end-to-end ML-Anwendung.
 
-| POC | Stack | Theme |
-| --- | --- | --- |
-| [POC1](POC1/) | Streamlit | CSV exploration in a single app |
-| [POC2](POC2/) | FastAPI + SQLAlchemy + SQLite + Streamlit | CSV upload, persisted analyses, plot rendering |
-| [POC3](POC3/) | FastAPI + SQLAlchemy + scikit-learn + Streamlit | Customer churn prediction with a trained model |
+Begleitmaterial zur Veranstaltung *„POCs mit VS Code und GitHub Copilot"* von
+**Prof. Dr. Christoph Weisser** (HSBI, Sommersemester 2026).
+
+> **Pädagogisches Ziel.** Jede POC wurde end-to-end durch einen einzigen,
+> sauber strukturierten Prompt im **Copilot Agent Mode** erzeugt. Der exakte
+> Prompt liegt in der jeweiligen POC-README, sodass ihr das Experiment
+> reproduzieren, abändern und erweitern könnt.
 
 ---
 
-## POC1 – CSV Explorer (Streamlit)
+## Die drei Komplexitätsstufen
 
-A minimal Streamlit app for quick CSV exploration. Users can upload their own
-CSV or load a built-in demo dataset (~500 rows, mixed numeric/categorical with
-missing values). The app shows row/column counts, dtypes and missing values,
-`df.describe()`, and per-column histograms and boxplots (matplotlib).
+| #   | Ordner                | Stufe                            | Was ihr lernt                                                                | Stack                                                                |
+| --- | --------------------- | -------------------------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1   | [`POC1/`](POC1/)      | **Single-File-App**              | Eine vollständige Datenanalyse-UI in einer Datei, kein Backend.              | Streamlit · pandas · matplotlib                                      |
+| 2   | [`POC2/`](POC2/)      | **Client / Server**              | Frontend trennt sich vom Backend, Daten werden persistent gespeichert.       | Streamlit · FastAPI · SQLAlchemy · SQLite                            |
+| 3   | [`POC3/`](POC3/)      | **End-to-End ML**                | Daten → Training → API → UI: die typische ML-Anwendung in vier Schichten.    | Streamlit · FastAPI · SQLAlchemy · scikit-learn / XGBoost · joblib   |
 
-**Run:**
+Jede POC enthält in ihrer README:
+
+- den **exakten Copilot-Prompt**, mit dem sie erzeugt wurde,
+- ein **Architektur-Diagramm** (Mermaid),
+- einen **komponentenweisen Walk-through**,
+- **Setup & Start**,
+- einen **Schritt-für-Schritt-Testplan** mit erwarteten Outputs,
+- **Extension Ideas** zum Weiterbauen.
+
+---
+
+## Architektur-Vergleich der drei POCs
+
+```mermaid
+flowchart LR
+    A["📊 POC 1<br/>Single-File-App<br/>(Streamlit only)"]
+    B["🗄️ POC 2<br/>Client / Server<br/>(Streamlit + FastAPI + SQLite)"]
+    C["🤖 POC 3<br/>End-to-End ML<br/>(+ scikit-learn / XGBoost)"]
+    A -- "Trennung in<br/>Frontend / Backend / DB" --> B
+    B -- "Modell-Schicht<br/>+ Training-Pipeline" --> C
+
+    style A fill:#1f3a5f,stroke:#0d1f3c,color:#fff
+    style B fill:#d97706,stroke:#92400e,color:#fff
+    style C fill:#15803d,stroke:#14532d,color:#fff
+```
+
+> **Hinweis zur Anzeige:** GitHub rendert Mermaid nativ. In VS Code braucht ihr
+> die Extension *„Markdown Preview Mermaid Support"* (`bierner.markdown-mermaid`),
+> sonst wird der Diagramm-Block nur als Code angezeigt.
+
+---
+
+## Wie ihr dieses Repo nutzt
+
+### Pfad A — Einfach durchklicken (≈ 20 min)
+
+Wenn ihr die drei Muster nur einmal *laufen sehen* wollt, folgt den READMEs in
+Reihenfolge:
+
+1. [POC1/README.md](POC1/README.md) — CSV-Explorer in einer Datei
+2. [POC2/README.md](POC2/README.md) — Frontend ↔ Backend ↔ Datenbank
+3. [POC3/README.md](POC3/README.md) — ML-Modell hinter einer API mit UI
+
+### Pfad B — Mit Copilot Agent Mode reproduzieren (≈ 1 h)
+
+So sind die POCs *gemeint*:
+
+1. VS Code in einem **leeren Ordner** öffnen.
+2. Copilot Chat öffnen, Modus von **Ask** auf **Agent** umstellen.
+3. Die jeweilige POC-README öffnen und den Block aus *„📋 Der exakte Copilot-Prompt"*
+   in den Chat kopieren.
+4. Den Agent generieren lassen — ggf. iterieren.
+5. Eure Version mit der hier eingecheckten vergleichen, um zu sehen, welche
+   Designentscheidungen ein LLM-Agent treffen kann.
+
+### Pfad C — Erweitern (offen)
+
+Jede POC endet mit *„Extension Ideas"* — konkrete nächste Schritte, um euer
+Verständnis zu vertiefen (z. B. POC2 um Auth ergänzen, POC3 um ein zweites
+Modell, POC1 um interaktive Plots mit Plotly).
+
+---
+
+## Voraussetzungen
+
+| Was               | Warum                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------- |
+| Python 3.10+      | Alle POCs nutzen moderne Type-Hints (`list[str]`, `Mapped[...]`, `match`).         |
+| ~500 MB freier Speicher | Für SQLite-DBs, Uploads, Plot-PNGs und das XGBoost-Modell-Artefakt.          |
+| VS Code + Copilot | Nur für **Pfad B** nötig (Reproduktion via Agent Mode).                            |
+| (optional) Git    | Empfohlen — siehe Workflow-Abschnitt unten.                                        |
+
+---
+
+## Quick Start
 
 ```bash
-cd POC1
+git clone https://github.com/<your-org>/POCs-mit-VS-Code-und-GitHub-Copilot.git
+cd POCs-mit-VS-Code-und-GitHub-Copilot
+
+# POC auswählen
+cd POC1   # oder POC2 / POC3
+
+# Eigenes venv pro POC (empfohlen)
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+Die genauen Run-Befehle stehen in jeder POC-README. Faustregel:
+
+```bash
+# POC1
 streamlit run app.py
-```
 
-See [POC1/README.md](POC1/README.md) for details.
-
----
-
-## POC2 – Analytics Backend + Frontend
-
-Splits the explorer idea into a proper client/server architecture:
-
-- **Backend** (`backend/`): FastAPI + SQLAlchemy on SQLite. Endpoints for
-  uploading CSV/TSV files, listing uploads, running an analysis (per-column
-  stats + overview plot) and retrieving stats and the rendered PNG.
-- **Frontend** (`frontend/`): Streamlit UI that talks to the backend over HTTP.
-- Persists `Upload`, `AnalysisRun`, and `ColumnStat` records; seeds a demo
-  dataset on first start.
-
-**Run:**
-
-```bash
-cd POC2
-pip install -r requirements.txt
-uvicorn backend.main:app --reload          # http://localhost:8000
-streamlit run frontend/app.py              # http://localhost:8501
-```
-
-See [POC2/README.md](POC2/README.md) for the full endpoint list.
-
----
-
-## POC3 – Churn Prediction
-
-End-to-end ML POC for predicting customer churn.
-
-- **Data** (`backend/generate_data.py`): generates a synthetic customer
-  dataset (`data/customers.csv`).
-- **Training** (`backend/train_model.py`): trains a scikit-learn classifier
-  on the customer features (age, tenure, monthly charges, contract type,
-  payment method, support calls) and persists the model artifact.
-- **Backend** (`backend/main.py`): FastAPI service exposing customer CRUD-style
-  reads, single and batch churn predictions, training trigger, and model
-  metadata. Customers are seeded into SQLite on first start.
-- **Frontend** (`frontend/app.py`): Streamlit UI to browse customers, request
-  predictions for an existing customer or an ad-hoc input, and inspect model
-  info.
-
-**Key endpoints:** `/api/health`, `/api/customers`, `/api/customers/{id}`,
-`/api/sample-customer`, `/api/predict`, `/api/predict/{customer_id}`,
-`/api/predictions`, `/api/train`, `/api/model/info`.
-
-**Run:**
-
-```bash
-cd POC3
-pip install -r requirements.txt
-python backend/generate_data.py            # optional, also auto-runs on startup
-python backend/train_model.py              # optional, or call POST /api/train later
+# POC2 / POC3 (zwei Terminals)
 uvicorn backend.main:app --reload          # http://localhost:8000
 streamlit run frontend/app.py              # http://localhost:8501
 ```
 
 ---
 
-## Conventions
+## Repository-Layout
 
-- Each POC has its own `requirements.txt`; create a separate virtual
-  environment per POC if you want full isolation.
-- Backends listen on `http://localhost:8000`, Streamlit frontends on
-  `http://localhost:8501` (CORS is configured accordingly in POC2/POC3).
-- Generated artifacts (uploads, plots, SQLite DB, model files) live under
-  each POC's `data/` directory and are safe to delete to reset state.
+```text
+POCs-mit-VS-Code-und-GitHub-Copilot/
+├── README.md                       ← ihr seid hier
+│
+├── POC1/                           ← Stufe 1: Single-File-Streamlit
+│   ├── README.md                   ← Walk-through, Prompt, Testplan
+│   ├── app.py                      ← komplette App in einer Datei
+│   ├── sample_data.py
+│   ├── data/sample.csv
+│   └── requirements.txt
+│
+├── POC2/                           ← Stufe 2: Frontend + Backend + DB
+│   ├── README.md
+│   ├── backend/                    ← FastAPI + SQLAlchemy + SQLite
+│   │   ├── main.py
+│   │   ├── models.py · schemas.py · database.py · analysis.py
+│   │   └── sample_data.py
+│   ├── frontend/app.py             ← Streamlit, ruft Backend per HTTP
+│   ├── data/uploads/ · data/plots/
+│   └── requirements.txt
+│
+└── POC3/                           ← Stufe 3: End-to-End ML
+    ├── README.md
+    ├── backend/                    ← FastAPI + SQLAlchemy + Modell
+    │   ├── main.py
+    │   ├── models.py · schemas.py · database.py
+    │   ├── generate_data.py        ← synthetischer Churn-Datensatz
+    │   └── train_model.py          ← trainiert + speichert model.pkl
+    ├── frontend/app.py             ← Streamlit mit drei Tabs
+    ├── data/customers.csv
+    └── (backend/model.pkl)         ← entsteht beim Training
+```
 
 ---
 
@@ -103,9 +165,7 @@ streamlit run frontend/app.py              # http://localhost:8501
 
 Die drei POCs sind als Begleitmaterial zur Veranstaltung *„POCs mit VS Code
 und GitHub Copilot"* (HSBI, Sommersemester 2026) entstanden. Sie wurden
-end-to-end im **Agent Mode** von GitHub Copilot gebaut. Die folgenden
-Abschnitte fassen die didaktischen Leitlinien und die verwendeten Prompts
-zusammen, damit jede:r die POCs selbst nachbauen kann.
+end-to-end im **Agent Mode** von GitHub Copilot gebaut.
 
 ## Lernziele
 
@@ -134,25 +194,33 @@ ML-Theorie, Frontend-Frameworks (React/Vue/…), Docker/Kubernetes.
 
 ## Der Vibe-Coding-Zyklus
 
-1. **Idee** beschreiben →
-2. **KI generiert** Code →
-3. **Prüfen** & ausführen →
-4. **Anpassung** beschreiben → (zurück zu 1)
+```mermaid
+flowchart LR
+    A["💡 Idee<br/>beschreiben"] --> B["🤖 KI generiert<br/>Code"]
+    B --> C["🔍 Prüfen<br/>& Ausführen"]
+    C --> D["✏️ Anpassung<br/>beschreiben"]
+    D --> A
+
+    style A fill:#dbeafe,stroke:#1e40af
+    style B fill:#fef3c7,stroke:#b45309
+    style C fill:#bbf7d0,stroke:#15803d
+    style D fill:#fce7f3,stroke:#9d174d
+```
 
 Jede Iteration dauert Sekunden bis Minuten — das ist der Unterschied zum
 klassischen Coding-Loop.
 
 ## Agent Mode vs. Ask Mode
 
-| Eigenschaft | Ask Mode | Agent Mode |
-| --- | :---: | :---: |
-| Code-Vorschläge | ✓ | ✓ |
-| Fragen beantworten | ✓ | ✓ |
-| Dateien erstellen/bearbeiten | ✗ | ✓ |
-| Terminal-Befehle ausführen | ✗ | ✓ |
-| Mehrstufige Aufgaben | ✗ | ✓ |
-| Selbstständig Fehler beheben | ✗ | ✓ |
-| Kontext: ganzes Projekt | eingeschränkt | ✓ |
+| Eigenschaft                        | Ask Mode      | Agent Mode |
+| ---------------------------------- | :-----------: | :--------: |
+| Code-Vorschläge                    | ✓             | ✓          |
+| Fragen beantworten                 | ✓             | ✓          |
+| Dateien erstellen / bearbeiten     | ✗             | ✓          |
+| Terminal-Befehle ausführen         | ✗             | ✓          |
+| Mehrstufige Aufgaben               | ✗             | ✓          |
+| Selbstständig Fehler beheben       | ✗             | ✓          |
+| Kontext: ganzes Projekt            | eingeschränkt | ✓          |
 
 **Faustregel:** Ask für Fragen, Agent für Aufgaben.
 
@@ -170,16 +238,8 @@ Anatomie eines guten Code-Prompts — fünf Bausteine:
 > Schlechte Prompts produzieren *generischen* Code. Gute Prompts produzieren
 > *euren* Code.
 
-**Vager Prompt** (führt zu Generischem):
-
-> Bau mir eine App, die CSVs analysieren kann und ein bisschen ML macht.
-
-**Spezifischer Prompt** (führt zu *eurem* Code):
-
-> Erstelle `backend/` mit FastAPI + SQLAlchemy + SQLite. Modelle: Upload,
-> AnalysisRun, ColumnStat. Endpunkte: `POST /api/upload`, `GET /api/uploads`,
-> `POST /api/analyze/{id}`. CORS für `http://localhost:8501`.
-> Pydantic-Schemas. Demo-Daten via `sample_data.py`.
+Die vollständigen Prompts der drei POCs findet ihr in der jeweiligen
+POC-README (Abschnitt *„📋 Der exakte Copilot-Prompt"*).
 
 ## Git/GitHub-Workflow: GitHub zuerst
 
@@ -188,10 +248,6 @@ Anatomie eines guten Code-Prompts — fünf Bausteine:
 3. **VS Code** öffnen.
 4. **Dateien** anlegen.
 5. **Commit & Push** — regelmäßig nach jeder funktionierenden Änderung.
-
-**Warum so herum?** Remote ist von Anfang an verknüpft, kein nachträgliches
-`git remote add`. Kollaboration, Issues und Branches sind ab Sekunde 1
-einsatzbereit.
 
 > **Goldene Regel:** Nach jeder funktionierenden Änderung committen.
 
@@ -206,13 +262,7 @@ __pycache__/
 *.key
 ```
 
-- `.venv/`, `__pycache__/` — lokal/maschinenspezifisch
-- `*.db`, `*.pkl` — generiert beim Ausführen
-- `.env`, `*.key` — Secrets (einmal gepusht = öffentlich)
-
 ## Fallstricke & Sicherheit
-
-Top-Fallstricke beim Vibe Coding:
 
 1. **Geheimnisse im Repo** — `.env`, API-Keys gepusht → *sofort rotieren*.
 2. **Fehlende `.gitignore`** — `.venv/`, `__pycache__/`, `*.db` fehlen.
@@ -224,128 +274,6 @@ Top-Fallstricke beim Vibe Coding:
 > **Niemals ins Repo:** API-Keys, Tokens, Passwörter, `.env`-Dateien mit
 > echten Werten, Datenbanken mit personenbezogenen Daten. Wenn doch
 > passiert: Schlüssel sofort rotieren — Löschen aus Git reicht *nicht*.
-
----
-
-# Die verwendeten Agent-Prompts
-
-Die folgenden Prompts wurden im Copilot Agent Mode verwendet, um die drei
-POCs zu erzeugen. Sie sind hier dokumentiert, damit ihr sie als Vorlage für
-eigene POCs nutzen könnt.
-
-## POC 1 — Streamlit CSV-Explorer
-
-```
-Erstelle eine einfache Streamlit-App app.py mit zwei Datenquellen:
-(a) st.file_uploader für eine eigene CSV,
-(b) Button "Beispieldaten laden", der einen integrierten Demo-Datensatz
-ohne Upload nutzt.
-
-Erzeuge dazu ein Hilfsmodul sample_data.py mit einer Funktion
-get_sample_df(), die per numpy/pandas einen realistischen Beispieldatensatz
-(ca. 500 Zeilen, gemischt numerisch/kategorisch, mit einigen fehlenden
-Werten) erzeugt; speichere ihn zusätzlich einmalig als data/sample.csv.
-
-Zeige nach Auswahl der Quelle:
-(1) Zeilen-/Spaltenanzahl,
-(2) Datentypen und fehlende Werte je Spalte,
-(3) df.describe() als Tabelle,
-(4) für jede numerische Spalte Histogramm und Boxplot mit matplotlib.
-
-Lege auch requirements.txt (streamlit, pandas, numpy, matplotlib),
-.gitignore und ein kurzes README an.
-```
-
-## POC 2 — FastAPI + SQLite Backend
-
-```
-Erstelle backend/ mit FastAPI + SQLAlchemy + SQLite.
-Modelle: Upload, AnalysisRun, ColumnStat.
-Endpunkte: POST /api/upload, GET /api/uploads, POST /api/analyze/{id},
-GET /api/stats/{id}, GET /api/plots/{id}.
-
-Lege zusätzlich ein Modul sample_data.py an, das mit numpy/pandas einen
-realistischen Demo-Datensatz (ca. 500 Zeilen, gemischt numerisch/
-kategorisch) erzeugt. Beim App-Start prüfen: wenn noch kein Upload
-existiert, diesen automatisch als "sample.csv" in die Upload-Tabelle seeden.
-
-Zusätzlicher Endpunkt POST /api/sample — legt den Beispiel-Upload an
-(oder liefert den bestehenden) und gibt dessen upload_id zurück, damit
-das Frontend direkt testen kann.
-
-Pydantic-Schemas nutzen, CORS für http://localhost:8501.
-```
-
-## POC 2 — Streamlit Frontend
-
-```
-Erstelle frontend/app.py (Streamlit): Datenquelle per st.radio wählbar —
-"Eigene CSV" (st.file_uploader + POST /api/upload) oder "Beispieldaten"
-(Button "Beispieldaten laden" ruft POST /api/sample). Die zurückgegebene
-upload_id wird jeweils in st.session_state gespeichert.
-
-Button "Analyse starten" ruft /api/analyze, Ergebnisse kommen über
-/api/stats und /api/plots.
-```
-
-## POC 3 — Daten-Generator
-
-```
-Erstelle backend/generate_data.py: erzeugt mit numpy einen realistischen
-synthetischen Churn-Datensatz mit ca. 5000 Zeilen
-(Felder: id, age, tenure_months, monthly_charges, contract_type,
-payment_method, support_calls, churn) und speichert ihn als
-data/customers.csv. Churn-Rate ca. 20 %, Features sollen plausibel mit
-churn korrelieren.
-```
-
-## POC 3 — Modelltraining
-
-```
-Erstelle backend/train_model.py: ruft generate_data.py auf, falls
-data/customers.csv fehlt; liest die CSV, One-Hot-kodiert contract_type
-und payment_method, trainiert einen xgboost.XGBClassifier (stratifizierter
-80/20-Split), gibt Accuracy und ROC-AUC aus und speichert Modell +
-Spaltenliste nach backend/model.pkl (joblib).
-```
-
-## POC 3 — Backend (FastAPI)
-
-```
-Erstelle backend/main.py mit FastAPI: Modelle Customer, Prediction,
-ModelRun (SQLAlchemy). Endpunkte: GET /api/customers,
-GET /api/customers/{id}, POST /api/predict,
-POST /api/predict/{customer_id}, POST /api/train, GET /api/model/info,
-GET /api/predictions.
-
-Bei App-Start: wenn customers-Tabelle leer ist, Daten aus
-data/customers.csv importieren (und generate_data.py ausführen, falls
-die Datei fehlt) — so sind sofort Beispielkunden abrufbar, ohne dass
-irgendetwas hochgeladen wurde.
-
-Zusätzlicher Endpunkt GET /api/sample-customer: liefert einen zufälligen
-Beispiel-Feature-Vektor (z. B. einen echten Kunden oder typische
-"high-risk"/"low-risk"-Profile) — damit das Frontend die Prediction testen
-kann.
-
-CORS für http://localhost:8501. Pydantic-Schemas nutzen.
-```
-
-## POC 3 — Frontend (Streamlit)
-
-```
-Erstelle frontend/app.py (Streamlit) mit drei Tabs:
-
-Tab "Kunden": Tabelle aus /api/customers mit Filter nach contract_type.
-
-Tab "Vorhersage": Formular mit allen Features (sinnvolle Defaults) plus
-Button "Beispielkunde laden" (ruft GET /api/sample-customer und befüllt
-das Formular) sowie Selectbox "Vorhandenen Kunden wählen" (nutzt
-POST /api/predict/{id}). Button "Predict" ruft /api/predict und zeigt
-Wahrscheinlichkeit als Metrik und Progress-Bar.
-
-Tab "Historie": zeigt /api/predictions.
-```
 
 ---
 
