@@ -12,14 +12,13 @@
 [![VS Code](https://img.shields.io/badge/VS%20Code-1.95%2B-007ACC?logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com/)
 [![Status](https://img.shields.io/badge/status-teaching%20demo-blue)](#)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![HSBI](https://img.shields.io/badge/HSBI-Sommersemester%202026-005E73)](https://www.hsbi.de/)
 
 Drei kleine, in sich geschlossene Prototypen, die euch durch **drei Komplexitätsstufen
 moderner Daten-Apps** führen — von der Single-File-Streamlit-App über eine
 saubere Drei-Schichten-Architektur bis hin zu einer end-to-end ML-Anwendung.
 
 Begleitmaterial zur Veranstaltung *„POCs mit VS Code und GitHub Copilot"* von
-**Prof. Dr. Christoph Weisser** (HSBI, Sommersemester 2026).
+**Prof. Dr. Christoph Weisser**.
 
 > **Pädagogisches Ziel.** Jede POC wurde end-to-end durch einen einzigen,
 > sauber strukturierten Prompt im **Copilot Agent Mode** erzeugt. Der exakte
@@ -178,7 +177,7 @@ POCs-mit-VS-Code-und-GitHub-Copilot/
 # Lehrkontext: Vibe Coding mit GitHub Copilot Agent Mode
 
 Die drei POCs sind als Begleitmaterial zur Veranstaltung *„POCs mit VS Code
-und GitHub Copilot"* (HSBI, Sommersemester 2026) entstanden. Sie wurden
+und GitHub Copilot"* entstanden. Sie wurden
 end-to-end im **Agent Mode** von GitHub Copilot gebaut.
 
 ## Lernziele
