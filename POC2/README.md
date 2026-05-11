@@ -1,5 +1,18 @@
 # POC 2 — Analytics Backend + Frontend
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Uvicorn](https://img.shields.io/badge/Uvicorn-ASGI-499848?logo=gunicorn&logoColor=white)](https://www.uvicorn.org/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.x-D71F00?logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Pydantic](https://img.shields.io/badge/Pydantic-2.x-E92063?logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
+[![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.x-11557C?logo=matplotlib&logoColor=white)](https://matplotlib.org/)
+[![Architecture](https://img.shields.io/badge/architecture-3--tier-blueviolet)](#architektur)
+[![Status](https://img.shields.io/badge/status-teaching%20demo-blue)](#)
+[![License](https://img.shields.io/badge/license-MIT-green)](../LICENSE)
+
 > **Komplexitätsstufe 2 — Client / Server.** Dieselbe Idee wie POC 1
 > (CSV explorieren), aber sauber in **Frontend, Backend und Datenbank** geteilt.
 > Uploads, Analyse-Runs und Spalten-Statistiken werden persistent gespeichert.

@@ -1,5 +1,19 @@
 # POCs mit VS Code & GitHub Copilot Agent Mode
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.x-D71F00?logo=sqlalchemy&logoColor=white)](https://www.sqlalchemy.org/)
+[![SQLite](https://img.shields.io/badge/SQLite-3-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-2.x-EB0028)](https://xgboost.readthedocs.io/)
+[![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-Agent%20Mode-24292F?logo=githubcopilot&logoColor=white)](https://docs.github.com/copilot)
+[![VS Code](https://img.shields.io/badge/VS%20Code-1.95%2B-007ACC?logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com/)
+[![Status](https://img.shields.io/badge/status-teaching%20demo-blue)](#)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![HSBI](https://img.shields.io/badge/HSBI-Sommersemester%202026-005E73)](https://www.hsbi.de/)
+
 Drei kleine, in sich geschlossene Prototypen, die euch durch **drei Komplexitätsstufen
 moderner Daten-Apps** führen — von der Single-File-Streamlit-App über eine
 saubere Drei-Schichten-Architektur bis hin zu einer end-to-end ML-Anwendung.

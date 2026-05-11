@@ -1,5 +1,14 @@
 # POC 1 — CSV Explorer (Single-File Streamlit)
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-1.x-013243?logo=numpy&logoColor=white)](https://numpy.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.x-11557C?logo=matplotlib&logoColor=white)](https://matplotlib.org/)
+[![Architecture](https://img.shields.io/badge/architecture-single--file-blueviolet)](#architektur)
+[![Status](https://img.shields.io/badge/status-teaching%20demo-blue)](#)
+[![License](https://img.shields.io/badge/license-MIT-green)](../LICENSE)
+
 > **Komplexitätsstufe 1 — Single-File-App.** Eine vollständige Datenanalyse-UI
 > in einer einzigen Python-Datei. Kein Backend, keine Datenbank, kein API-Layer
 > — nur Streamlit + pandas + matplotlib.
